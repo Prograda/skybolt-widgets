@@ -5,6 +5,8 @@
 
 #include <QWidget>
 
+class QToolButton;
+
 namespace skybolt {
 
 class ErrorLogModel;
