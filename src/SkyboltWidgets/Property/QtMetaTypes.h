@@ -19,7 +19,7 @@ struct PropertyVector
 	QVariant itemDefaultValue;
 };
 
-Q_DECLARE_METATYPE(OptionalProperty)
-Q_DECLARE_METATYPE(PropertyVector)
-
 } // namespace skybolt
+
+Q_DECLARE_METATYPE(skybolt::OptionalProperty)
+Q_DECLARE_METATYPE(skybolt::PropertyVector)
