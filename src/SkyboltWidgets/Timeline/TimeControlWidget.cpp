@@ -3,7 +3,7 @@
 
 #include "TimeControlWidget.h"
 
-#include <QApplication.h>
+#include <QApplication>
 #include <QLabel>
 #include <QLayout>
 #include <QStyle>
