@@ -3,7 +3,6 @@
 
 #ifdef BUILD_WITH_SKYBOLT_REFLECT
 
-#define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 #include <SkyboltReflect/Reflection.h>
 #include <SkyboltWidgets/Property/QtMetaTypes.h>

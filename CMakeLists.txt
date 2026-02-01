@@ -49,7 +49,7 @@ if (EXISTS ${CMAKE_SOURCE_DIR}/conanfile.py) # File might not exist if during co
 endif()
 
 # Install CMake scripts
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/CMake	DESTINATION .)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/cmake	DESTINATION .)
 
 # Install conan files (required by 'conan editable' feature. See https://docs.conan.io/en/latest/developing_packages/editable_packages.html)
 if (EXISTS ${CMAKE_SOURCE_DIR}/conanfile.py) # File might not exist during conan build. See https://github.com/conan-io/conan/issues/5415.

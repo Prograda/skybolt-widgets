@@ -59,6 +59,6 @@ class SkyboltWidgetsConan(ConanFile):
 	def package_info(self):
 		self.cpp_info.includedirs = ["include"]
 		self.cpp_info.libs = ["SkyboltWidgets"]
-		self.cpp_info.builddirs = ["CMake"]
+		self.cpp_info.builddirs = ["cmake"]
 		if self.options.with_skybolt_reflect:
 			self.cpp_info.defines.append("BUILD_WITH_SKYBOLT_REFLECT=1")
