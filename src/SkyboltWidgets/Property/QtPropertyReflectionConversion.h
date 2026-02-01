@@ -54,7 +54,7 @@ std::optional<refl::Instance> qtToValueInstance(const refl::Property& property, 
 {
 	if constexpr (std::is_same_v<ReflValueT, ReflPropertyInstanceVariant>)
 	{
-		std::optional<refl::Instance> optionalValueInstance = value.value<ReflPropertyInstanceVariant>().valueInstance;
+		std::optional<refl::Instance> optionalValueInstance = value.value<ReflPropertyInstanceVariant>().instance;
 		if (!optionalValueInstance)
 		{
 			optionalValueInstance = defaultValue.value<ReflPropertyInstanceVariant>().instance;

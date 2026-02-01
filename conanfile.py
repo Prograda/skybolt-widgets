@@ -21,12 +21,21 @@ class SkyboltWidgetsConan(ConanFile):
 	exports_sources = "*"
 	no_copy_source = True
 
+	def include_package(self, name, version, subfolder=None, transitive_headers=False):
+		currentDir = os.path.dirname(os.path.abspath(__file__))
+		recipes_path = os.path.join(currentDir, "Conan/Recipes", name)
+		if (subfolder):
+			recipes_path = os.path.join(recipes_path, subfolder)
+            
+		self.run(f"conan export --version {version} .", cwd=recipes_path)
+		self.requires(f"{name}/{version}", transitive_headers=transitive_headers)
+
 	def requirements(self):
 		self.requires("catch2/2.13.8")
 		self.requires("qt/6.10.1", transitive_headers=True)
 		
 		if self.options.with_skybolt_reflect:
-			self.requires("skybolt-reflect/1.0.0")
+			self.include_package("skybolt-reflect", "1.0.0", transitive_headers=True)
 
 	def generate(self):
 		tc = CMakeToolchain(self)

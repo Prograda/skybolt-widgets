@@ -3,9 +3,8 @@ set(APP_NAME SkyboltWidgetsTests)
 file(GLOB SOURCE_FILES *.cpp *.h)
 
 include_directories("../")
-include_directories("../../Skybolt")
 
-find_package(Catch2)
+find_package(Catch2 REQUIRED)
 
 add_executable(${APP_NAME} ${SOURCE_FILES})
 

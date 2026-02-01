@@ -26,8 +26,6 @@ struct ReflPropertyInstanceVariant
 	std::optional<skybolt::refl::Instance> instance;
 };
 
-Q_DECLARE_METATYPE(ReflPropertyInstanceVariant);
-
 using ReflInstanceGetter = std::function<std::optional<skybolt::refl::Instance>()>;
 
 using PropertyFactory = std::function<QtPropertyUpdaterApplier(skybolt::refl::TypeRegistry& typeRegistry, const ReflInstanceGetter& instanceGetter, const skybolt::refl::PropertyPtr& property)>;
@@ -45,5 +43,7 @@ void addReflEditorsToFactoryMap(PropertyEditorWidgetFactoryMap& m, skybolt::refl
 ReflTypePropertyFactoryMap createDefaultReflTypePropertyFactories(skybolt::refl::TypeRegistry& typeRegistry);
 
 } // namespace skybolt
+
+Q_DECLARE_METATYPE(skybolt::ReflPropertyInstanceVariant);
 
 #endif // BUILD_WITH_SKYBOLT_REFLECT
