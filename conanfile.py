@@ -1,11 +1,11 @@
 from conan import ConanFile
-from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps
+from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps, cmake_layout
 import os
 
 class SkyboltWidgetsConan(ConanFile):
 	implements = ["auto_shared_fpic"]
 	name = "skybolt-widgets"
-	version = "1.0.0"
+	version = "1.1.0"
 	settings = "os", "compiler", "arch", "build_type"
 	options = {
 		"fPIC": [True, False],
@@ -21,24 +21,39 @@ class SkyboltWidgetsConan(ConanFile):
 	exports_sources = "*"
 	no_copy_source = True
 
-	def include_package(self, name, version, subfolder=None, transitive_headers=False):
-		currentDir = os.path.dirname(os.path.abspath(__file__))
-		recipes_path = os.path.join(currentDir, "Conan/Recipes", name)
-		if (subfolder):
-			recipes_path = os.path.join(recipes_path, subfolder)
-            
-		self.run(f"conan export --version {version} .", cwd=recipes_path)
-		self.requires(f"{name}/{version}", transitive_headers=transitive_headers)
+	test_requires = "catch2/3.16.1"
+
+	def _is_cmake_multi_generator(self) -> bool:
+		gen = self.conf.get("tools.cmake.cmaketoolchain:generator")
+		if gen:
+			return "Visual" in gen or "Xcode" in gen or "Multi-Config" in gen
+		else:
+			compiler = self.settings.get_safe("compiler")
+			if compiler == "msvc":
+				return True
+			else:
+				return False
+
+	def _build_type_path_if_multi_generator(self) -> bool:
+		return f"{self.settings.build_type}" if self._is_cmake_multi_generator() else ""
 
 	def requirements(self):
-		self.requires("catch2/2.13.8")
 		self.requires("qt/6.10.1", transitive_headers=True)
 		
 		if self.options.with_skybolt_reflect:
-			self.include_package("skybolt-reflect", "1.0.0", transitive_headers=True)
+			self.requires("skybolt-reflect/1.1.0", transitive_headers=True)
+
+	def layout(self):
+		cmake_layout(self)
+
+		self.cpp.source.includedirs = ["src"]
+		self.cpp.build.libdirs = [f"src/SkyboltWidgets/{self._build_type_path_if_multi_generator()}"]
 
 	def generate(self):
 		tc = CMakeToolchain(self)
+		# catch_discover_tests should run just prior to tests as part of the host context to 
+		# ensure the runtime dependencies are available to it.
+		tc.variables["CMAKE_CATCH_DISCOVER_TESTS_DISCOVERY_MODE"] = "PRE_TEST"
 	
 		tc.variables["BUILD_WITH_SKYBOLT_REFLECT"] = self.options.with_skybolt_reflect
 		
@@ -49,8 +64,10 @@ class SkyboltWidgetsConan(ConanFile):
 
 	def build(self):
 		cmake = CMake(self)
-		cmake.configure(variables={"CMAKE_INSTALL_PREFIX": f"{self.build_folder}/Install"})
+		cmake.configure()
 		cmake.build()
+		# Use `tools.build:skip_test=True` configuration option to skip tests
+		cmake.test()
 		
 	def package(self):
 		cmake = CMake(self)
