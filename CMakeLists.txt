@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.26.0)
 
 project(SkyboltWidgets)
 
-enable_testing()
+include(CTest)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -34,11 +34,12 @@ endif()
 # Build tree
 #-------------------------------------------------------------
 include(AddSourceGroup)
-include(Catch)
 
 add_subdirectory(src/SkyboltWidgets)
 add_subdirectory(src/SkyboltWidgetsExampleApp)
-add_subdirectory(src/SkyboltWidgetsTests)
+if (BUILD_TESTING)
+	add_subdirectory(src/SkyboltWidgetsTests)
+endif()
 
 #-------------------------------------------------------------
 # Installation
@@ -55,7 +56,6 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/cmake	DESTINATION .)
 if (EXISTS ${CMAKE_SOURCE_DIR}/conanfile.py) # File might not exist during conan build. See https://github.com/conan-io/conan/issues/5415.
 	install(FILES ${CMAKE_SOURCE_DIR}/conanfile.py DESTINATION .)
 endif()
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/Conan	DESTINATION .)
 
 # Install headers
 install(

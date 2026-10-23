@@ -4,7 +4,8 @@ file(GLOB SOURCE_FILES *.cpp *.h)
 
 include_directories("../")
 
-find_package(Catch2 REQUIRED)
+find_package(Catch2 3 REQUIRED)
+include(Catch)
 
 add_executable(${APP_NAME} ${SOURCE_FILES})
 
