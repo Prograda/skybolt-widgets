@@ -1,7 +1,7 @@
 // Copyright (c) Prograda Pty. Ltd.
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <SkyboltWidgets/Property/ContainerProperties.h>
 #include <SkyboltWidgets/Property/EditorWidgets.h>
 #include <SkyboltWidgets/Property/QtProperty.h>

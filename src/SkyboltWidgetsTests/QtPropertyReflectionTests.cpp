@@ -3,7 +3,7 @@
 
 #ifdef BUILD_WITH_SKYBOLT_REFLECT
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <SkyboltReflect/Reflection.h>
 #include <SkyboltWidgets/Property/ContainerProperties.h>
 #include <SkyboltWidgets/Property/QtPropertyReflection.h>

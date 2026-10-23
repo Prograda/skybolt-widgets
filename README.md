@@ -65,7 +65,11 @@ A utility class that populates a QMenu with names of recently opened files.
 ## Building
 This library can be built using [Conan](https://conan.io) and [CMake](https://cmake.org).
 
-The [Conan recipe](conanfile.py) provides a list of build dependencies. These dependences are aquired automatically if building with conan. The `skybolt-reflect` package is an optional dependency which provides runtime reflection for the `PropertiesModel` class.
+The [Conan recipe](conanfile.py) provides a list of build dependencies. The required dependencies are acquired automatically if building with conan. 
+
+The `skybolt-reflect` package is an optional dependency which provides runtime reflection for the `PropertiesModel` class.  To obtain this dependency:
+* Download skybolt-reflect source: `git clone --branch v<X.Y.Z> https://github.com/Prograda/skybolt-reflect`.  Be sure to refer to the same branch referred to in the `self.requires("skybolt-reflect/v<X.Y.Z>")` statement in [skybolt-widget's conanfile.py](./conanfile.py).  
+* Run `conan create .` in the source directory to build and make the package available locally.
 
 ---
 ## License
